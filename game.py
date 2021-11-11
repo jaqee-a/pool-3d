@@ -1,15 +1,10 @@
 import pygame
-from pygame import key
 from camera import Camera
 
 from constants import HEIGHT, WIDTH, FPS
 from keyboard import Keyboard
 from utils import Vec3
-
-
-cpoints_ = [
-    []
-]
+from cube import *
 
 class Game:
 
@@ -28,6 +23,8 @@ class Game:
         
 
         self.sprites = pygame.sprite.Group()
+
+        self.cube = Cube(Vec3(0, 0, 5), None)
 
 
         self.running = False
@@ -56,13 +53,13 @@ class Game:
             for key_held in Keyboard.held_keys:
                 #TODO Keyboard handler
                 if key_held == pygame.K_z:
-                    Camera.main.position += Vec3.mul(Vec3(0, 0, 1), delta_time)
+                    Camera.main.position += Vec3.mul(Camera.main.forward(), delta_time * 5)
                 if key_held == pygame.K_s:
-                    Camera.main.position += Vec3.mul(Vec3(0, 0, -1), delta_time)
+                    Camera.main.position += Vec3.mul(Camera.main.backward(), delta_time * 5)
                 if key_held == pygame.K_d:
-                    Camera.main.position += Vec3.mul(Vec3(1, 0, 0), delta_time)
+                    Camera.main.position += Vec3.mul(Camera.main.right(), delta_time * 5)
                 if key_held == pygame.K_q:
-                    Camera.main.position += Vec3.mul(Vec3(-1, 0, 0), delta_time)
+                    Camera.main.position += Vec3.mul(Camera.main.left(), delta_time * 5)
                 if key_held == pygame.K_SPACE:
                     Camera.main.position += Vec3.mul(Vec3(0, 1, 0), delta_time * 5)
                 if key_held == pygame.K_LCTRL:
@@ -71,11 +68,16 @@ class Game:
                     Camera.main.rotation += Vec3.mul(Vec3(0, 1, 0), delta_time)
                 if key_held == pygame.K_RIGHT:
                     Camera.main.rotation += Vec3.mul(Vec3(0, -1, 0), delta_time)
+                if key_held == pygame.K_UP:
+                    Camera.main.rotation += Vec3.mul(Vec3(1, 0, 0), delta_time)
+                if key_held == pygame.K_DOWN:
+                    Camera.main.rotation += Vec3.mul(Vec3(-1, 0, 0), delta_time)
 
             self.sprites.update()
 
 
             ##############
+            """
             pos0=Camera.main.world_to_screen_point(Vec3(-1, 0, 1)).values()
             pos1=Camera.main.world_to_screen_point(Vec3(1, 0, 1)).values()
             pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
@@ -177,9 +179,11 @@ class Game:
             pos0=Camera.main.world_to_screen_point(Vec3(1, -2, 1)).values()
             pos1=Camera.main.world_to_screen_point(Vec3(1, -2, 2)).values()
             pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
-
+            """
             ##############
 
+            for triangle in self.cube.triangles:
+                triangle.draw(self.screen)
 
             self.sprites.draw(self.screen)
             pygame.display.flip()
