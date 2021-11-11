@@ -24,19 +24,43 @@ class Game:
 
         self.sprites = pygame.sprite.Group()
 
-        self.cube = Cube(Vec3(0, 0, 5), None)
+        Engine.game_objects.append(Cube(Vec3(0, 0, 5), None))
 
 
         self.running = False
 
+    def handle_keys(self):
+        for key_held in Keyboard.held_keys:
+            if key_held == pygame.K_z:
+                Camera.main.position += Vec3.mul(Camera.main.forward(), self.delta_time * 5)
+            if key_held == pygame.K_s:
+                Camera.main.position += Vec3.mul(Camera.main.backward(), self.delta_time * 5)
+            if key_held == pygame.K_d:
+                Camera.main.position += Vec3.mul(Camera.main.right(), self.delta_time * 5)
+            if key_held == pygame.K_q:
+                Camera.main.position += Vec3.mul(Camera.main.left(), self.delta_time * 5)
+            if key_held == pygame.K_SPACE:
+                Camera.main.position += Vec3.mul(Vec3(0, 1, 0), self.delta_time * 5)
+            if key_held == pygame.K_LCTRL:
+                Camera.main.position += Vec3.mul(Vec3(0, -1, 0), self.delta_time * 5)
+            if key_held == pygame.K_LEFT:
+                Camera.main.rotation += Vec3.mul(Vec3(0, 1, 0), self.delta_time)
+            if key_held == pygame.K_RIGHT:
+                Camera.main.rotation += Vec3.mul(Vec3(0, -1, 0), self.delta_time)
+            if key_held == pygame.K_UP:
+                Camera.main.rotation += Vec3.mul(Vec3(1, 0, 0), self.delta_time)
+            if key_held == pygame.K_DOWN:
+                Camera.main.rotation += Vec3.mul(Vec3(-1, 0, 0), self.delta_time)
+
+
 
     def run(self):
         running = True
-    
+        
         while running:
-            self.screen.fill((0, 0, 0))
-            delta_time = self.clock.tick(FPS) / 1000
-
+            self.screen.fill((175, 255, 175))
+            self.delta_time = self.clock.tick(FPS) / 1000
+            
             for event in pygame.event.get():
 
                 if event.type == pygame.QUIT:
@@ -49,143 +73,19 @@ class Game:
                     Keyboard.remove_key(event.key)
 
             
-
-            for key_held in Keyboard.held_keys:
-                #TODO Keyboard handler
-                if key_held == pygame.K_z:
-                    Camera.main.position += Vec3.mul(Camera.main.forward(), delta_time * 5)
-                if key_held == pygame.K_s:
-                    Camera.main.position += Vec3.mul(Camera.main.backward(), delta_time * 5)
-                if key_held == pygame.K_d:
-                    Camera.main.position += Vec3.mul(Camera.main.right(), delta_time * 5)
-                if key_held == pygame.K_q:
-                    Camera.main.position += Vec3.mul(Camera.main.left(), delta_time * 5)
-                if key_held == pygame.K_SPACE:
-                    Camera.main.position += Vec3.mul(Vec3(0, 1, 0), delta_time * 5)
-                if key_held == pygame.K_LCTRL:
-                    Camera.main.position += Vec3.mul(Vec3(0, -1, 0), delta_time * 5)
-                if key_held == pygame.K_LEFT:
-                    Camera.main.rotation += Vec3.mul(Vec3(0, 1, 0), delta_time)
-                if key_held == pygame.K_RIGHT:
-                    Camera.main.rotation += Vec3.mul(Vec3(0, -1, 0), delta_time)
-                if key_held == pygame.K_UP:
-                    Camera.main.rotation += Vec3.mul(Vec3(1, 0, 0), delta_time)
-                if key_held == pygame.K_DOWN:
-                    Camera.main.rotation += Vec3.mul(Vec3(-1, 0, 0), delta_time)
+            self.handle_keys()
 
             self.sprites.update()
-
-
-            ##############
-            """
-            pos0=Camera.main.world_to_screen_point(Vec3(-1, 0, 1)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(1, 0, 1)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
-
-            pos0=Camera.main.world_to_screen_point(Vec3(-1, 2, 1)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(1, 2, 1)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
-
-            pos0=Camera.main.world_to_screen_point(Vec3(-1, 0, 1)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(-1, 2, 1)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
-
-            pos0=Camera.main.world_to_screen_point(Vec3(1, 0, 1)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(1, 2, 1)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
-
-            pos0=Camera.main.world_to_screen_point(Vec3(-1, 0, 2)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(1, 0, 2)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
-
-            pos0=Camera.main.world_to_screen_point(Vec3(-1, 2, 2)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(1, 2, 2)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
-
-            pos0=Camera.main.world_to_screen_point(Vec3(-1, 0, 2)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(-1, 2, 2)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
-
-            pos0=Camera.main.world_to_screen_point(Vec3(1, 0, 2)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(1, 2, 2)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
-
-            #DO WHAT EVER
-            pos0=Camera.main.world_to_screen_point(Vec3(-1, 0, 1)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(-1, 0, 2)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
             
-            pos0=Camera.main.world_to_screen_point(Vec3(1, 0, 1)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(1, 0, 2)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
-            
-            pos0=Camera.main.world_to_screen_point(Vec3(-1, 2, 1)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(-1, 2, 2)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
-            
-            pos0=Camera.main.world_to_screen_point(Vec3(1, 2, 1)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(1, 2, 2)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
+            for gameobject in Engine.game_objects:
+                gameobject.triangles.sort(key=lambda x:x.get_avg_z(), reverse=True)
+                for triangle in gameobject.triangles:
+                    triangle.draw(self.screen)
 
-            ##############
-
-            
-            ##############
-            pos0=Camera.main.world_to_screen_point(Vec3(-1, -4, 1)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(1, -4, 1)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
-
-            pos0=Camera.main.world_to_screen_point(Vec3(-1, -2, 1)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(1, -2, 1)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
-
-            pos0=Camera.main.world_to_screen_point(Vec3(-1, -4, 1)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(-1, -2, 1)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
-
-            pos0=Camera.main.world_to_screen_point(Vec3(1, -4, 1)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(1, -2, 1)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
-
-            pos0=Camera.main.world_to_screen_point(Vec3(-1, -4, 2)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(1, -4, 2)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
-
-            pos0=Camera.main.world_to_screen_point(Vec3(-1, -2, 2)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(1, -2, 2)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
-
-            pos0=Camera.main.world_to_screen_point(Vec3(-1, -4, 2)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(-1, -2, 2)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
-
-            pos0=Camera.main.world_to_screen_point(Vec3(1, -4, 2)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(1, -2, 2)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
-
-            #DO WHAT EVER
-            pos0=Camera.main.world_to_screen_point(Vec3(-1, -4, 1)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(-1, -4, 2)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
-            
-            pos0=Camera.main.world_to_screen_point(Vec3(1, -4, 1)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(1, -4, 2)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
-            
-            pos0=Camera.main.world_to_screen_point(Vec3(-1, -2, 1)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(-1, -2, 2)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
-            
-            pos0=Camera.main.world_to_screen_point(Vec3(1, -2, 1)).values()
-            pos1=Camera.main.world_to_screen_point(Vec3(1, -2, 2)).values()
-            pygame.draw.line(self.screen, (255, 255, 255), pos0, pos1, 5)
-            """
-            ##############
-
-            for triangle in self.cube.triangles:
-                triangle.draw(self.screen)
 
             self.sprites.draw(self.screen)
+
+            self.screen.blit(pygame.transform.flip(self.screen, False, True), (0, 0))
             pygame.display.flip()
 
         pygame.quit()
