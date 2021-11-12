@@ -1,3 +1,4 @@
+import numpy as np
 import pygame
 from camera import Camera
 
@@ -24,7 +25,7 @@ class Game:
 
         self.sprites = pygame.sprite.Group()
 
-        Engine.game_objects.append(Cube(Vec3(0, 0, 5), None))
+        Engine.game_objects.append(Cube(Vec3(0, 0, 5), 3))
 
 
         self.running = False
@@ -77,10 +78,10 @@ class Game:
 
             self.sprites.update()
             
-            for gameobject in Engine.game_objects:
-                gameobject.triangles.sort(key=lambda x:x.get_avg_z(), reverse=True)
-                for triangle in gameobject.triangles:
-                    triangle.draw(self.screen)
+
+            Engine.triangles = Engine.triangles[np.vectorize(lambda x:x.get_avg_z())(Engine.triangles).argsort()]
+            for triangle in reversed(Engine.triangles):
+                triangle.draw(self.screen)
 
 
             self.sprites.draw(self.screen)

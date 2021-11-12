@@ -6,7 +6,7 @@ from numpy import cos, sin
 class Engine:
 
     game_objects = []
-
+    triangles = np.array([])
 
     @staticmethod
     def rotate(point, rotation):
