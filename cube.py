@@ -7,6 +7,8 @@ class Cube(GameObject):
 
 
     def __init__(self, pos: Vec3, res: int) -> None:
+        super(Cube, self).__init__()
+
         #print(Engine.calc_normal(Vec3(step + step * i, step * i, step + step * j) , Vec3(step + step * i, step + step * j, step + step * j) , Vec3(step * i, step + step * j, step + step * j)))
         self.position = pos
         self.triangles = []
@@ -43,8 +45,8 @@ class Cube(GameObject):
                 ]
 
         #SPHERE
-        """
+        
         for triangle in self.triangles:
             triangle.points = [*map(lambda x:(x - Vec3(.5, .5, .5)).normalized(), triangle.points),]
-        """
+        
         Engine.triangles = np.append(Engine.triangles, self.triangles)

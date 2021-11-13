@@ -22,10 +22,10 @@ class Game:
 
         self.clock = pygame.time.Clock()
         
+        cube = Cube(Vec3(0, 0, 5), 16)
 
-        self.sprites = pygame.sprite.Group()
+        Engine.game_objects.append(cube)
 
-        Engine.game_objects.append(Cube(Vec3(0, 0, 5), 3))
 
 
         self.running = False
@@ -57,9 +57,10 @@ class Game:
 
     def run(self):
         running = True
+        image = pygame.Surface((WIDTH, HEIGHT))
         
         while running:
-            self.screen.fill((175, 255, 175))
+            image.fill((175, 255, 175))
             self.delta_time = self.clock.tick(FPS) / 1000
             
             for event in pygame.event.get():
@@ -76,17 +77,15 @@ class Game:
             
             self.handle_keys()
 
-            self.sprites.update()
-            
+
 
             Engine.triangles = Engine.triangles[np.vectorize(lambda x:x.get_avg_z())(Engine.triangles).argsort()]
             for triangle in reversed(Engine.triangles):
-                triangle.draw(self.screen)
+                triangle.draw(image)
 
 
-            self.sprites.draw(self.screen)
-
-            self.screen.blit(pygame.transform.flip(self.screen, False, True), (0, 0))
+            #self.screen.blit(pygame.transform.flip(self.screen, False, True), (0, 0))
+            self.screen.blit(pygame.transform.flip(image, False, True), (0, 0))
             pygame.display.flip()
 
         pygame.quit()

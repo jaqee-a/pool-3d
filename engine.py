@@ -57,25 +57,3 @@ class Engine:
     @staticmethod
     def calc_normal(p1: Vec3, p2: Vec3, p3: Vec3):
         return (p2 - p1).cross(p3 - p1).normalized()
-        v1 = Vec3(0, 0, 0)
-        v1.x = (p2.x - p1.x)
-        v1.y = (p2.y - p1.y)
-        v1.z = (p2.z - p1.z)
-        v1l = (v1.x * v1.x + v1.y * v1.y + v1.z * v1.z)**.5
-        v1.x = v1.x / v1l
-        v1.y = v1.y / v1l
-        v1.z = v1.z / v1l
-        v2 = Vec3(0, 0, 0)
-        v2.x = (p3.x - p1.x)
-        v2.y = (p3.y - p1.y)
-        v2.z = (p3.z - p1.z)
-        v2l = (v2.x * v2.x + v2.y * v2.y + v2.z * v2.z)**.5
-        v2.x = v2.x / v2l
-        v2.y = v2.y / v2l
-        v2.z = v2.z / v2l
-        
-        toReturn = Vec3(0, 0, 0)
-        toReturn.x = v1.y * v2.z - v1.z * v2.y
-        toReturn.y = v1.z * v2.x - v1.x * v2.z
-        toReturn.z = v1.x * v2.y - v1.y * v2.x
-        return toReturn
