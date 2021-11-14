@@ -1,6 +1,6 @@
 HEIGHT = 700
 WIDTH  = 1280
-FPS    = 30
+FPS    = 120
 
 # Camera Settings
 FOV    = 500

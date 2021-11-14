@@ -4,6 +4,7 @@ from camera import Camera
 
 from constants import HEIGHT, WIDTH, FPS
 from keyboard import Keyboard
+from shpere import Sphere
 from utils import Vec3
 from cube import *
 
@@ -21,11 +22,17 @@ class Game:
         pygame.display.set_caption("Pool")
 
         self.clock = pygame.time.Clock()
+
         
-        cube = Cube(Vec3(0, 0, 5), 16)
+        Cube(Vec3(0, 0,  5), Vec3(0, 0, 0), 2)
+        Cube(Vec3(0, 0, 10), Vec3(0, 0, 0), 2)
+        Cube(Vec3(0, 0, 15), Vec3(0, 0, 0), 2)
+        Cube(Vec3(0, 0, 20), Vec3(0, 0, 0), 2)
 
-        Engine.game_objects.append(cube)
-
+        Sphere(Vec3(5, 0,  5), Vec3(0, 0, 0), 2)
+        Sphere(Vec3(5, 0, 10), Vec3(0, 0, 0), 2)
+        Sphere(Vec3(5, 0, 15), Vec3(0, 0, 0), 2)
+        Sphere(Vec3(5, 0, 20), Vec3(0, 0, 0), 2)
 
 
         self.running = False
@@ -62,6 +69,7 @@ class Game:
         while running:
             image.fill((175, 255, 175))
             self.delta_time = self.clock.tick(FPS) / 1000
+            print(self.clock.get_fps())
             
             for event in pygame.event.get():
 
@@ -79,12 +87,11 @@ class Game:
 
 
 
-            Engine.triangles = Engine.triangles[np.vectorize(lambda x:x.get_avg_z())(Engine.triangles).argsort()]
-            for triangle in reversed(Engine.triangles):
-                triangle.draw(image)
+            Camera.main.calc_cs()
+            for mesh in Engine.meshes:
+                mesh.draw(image)
 
 
-            #self.screen.blit(pygame.transform.flip(self.screen, False, True), (0, 0))
             self.screen.blit(pygame.transform.flip(image, False, True), (0, 0))
             pygame.display.flip()
 

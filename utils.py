@@ -17,7 +17,7 @@ class Vec3:
         self.x = x
         self.y = y
         self.z = z
-
+        
     def set(self, x, y, z):
         self.x, self.y, self.z = x, y, z
 
@@ -54,7 +54,9 @@ class Vec3:
         return self.x * other.x + self.y * other.y + self.z * other.z
 
     def cross(self, other):
-        return Vec3(self.y * other.z - other.y * self.z, self.x * other.z - other.x * self.z, self.x * other.y - other.x * self.y)
+        return Vec3(self.y * other.z - other.y * self.z,
+                    other.x * self.z - self.x * other.z,
+                    self.x * other.y - other.x * self.y)
 
     def __add__(self, other):
         return Vec3(self.x + other.x, self.y + other.y, self.z + other.z)

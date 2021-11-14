@@ -13,8 +13,8 @@ class Camera(GameObject):
         return Vec2(WIDTH // 2, HEIGHT // 2)
 
     def world_to_screen_point(self, point: Vec3) -> Vec2:
-        point -= self.position
-        cam_points = Engine.rotate(point, self.rotation)
+        cam_points = point - self.position
+        cam_points = Engine.rotate_cs(cam_points, self.cos, self.sin)
 
         u0, v0 = Camera.get_center_uv().values()
         

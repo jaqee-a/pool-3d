@@ -1,3 +1,4 @@
+from math import cos, sin
 from engine import Engine
 from utils import Vec3
 
@@ -9,6 +10,12 @@ class GameObject:
         self.position = Vec3(0, 0, 0)
         self.rotation = Vec3(0, 0, 0)
 
+        self.cos = self.sin = (0, 0, 0)
+
+
+    def calc_cs(self):
+        self.cos = (cos(self.rotation.x), cos(self.rotation.y), cos(self.rotation.z))
+        self.sin = (sin(self.rotation.x), sin(self.rotation.y), sin(self.rotation.z))
 
 
     def forward(self):
