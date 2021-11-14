@@ -1,12 +1,14 @@
-import numpy as np
 import pygame
-from camera import Camera
 
 from constants import HEIGHT, WIDTH, FPS
+
+from engine import Engine
+from camera import Camera
+from mesh import Mesh
 from keyboard import Keyboard
 from shpere import Sphere
 from utils import Vec3
-from cube import *
+from cube import Cube
 
 class Game:
 
@@ -24,15 +26,25 @@ class Game:
         self.clock = pygame.time.Clock()
 
         
-        Cube(Vec3(0, 0,  5), Vec3(0, 0, 0), 2)
-        Cube(Vec3(0, 0, 10), Vec3(0, 0, 0), 2)
-        Cube(Vec3(0, 0, 15), Vec3(0, 0, 0), 2)
-        Cube(Vec3(0, 0, 20), Vec3(0, 0, 0), 2)
+        Cube(Vec3(-10, 0,  5), Vec3(0, 0, 0), 2)
+        Cube(Vec3(-10, 0, 10), Vec3(0, 0, 0), 2)
+        Cube(Vec3(-10, 0, 15), Vec3(0, 0, 0), 2)
+        Cube(Vec3(-10, 0, 20), Vec3(0, 0, 0), 2)
+
+        Cube(Vec3(-5, 0,  5), Vec3(0, 0, 0), 2)
+        Cube(Vec3(-5, 0, 10), Vec3(0, 0, 0), 2)
+        Cube(Vec3(-5, 0, 15), Vec3(0, 0, 0), 2)
+        Cube(Vec3(-5, 0, 20), Vec3(0, 0, 0), 2)
 
         Sphere(Vec3(5, 0,  5), Vec3(0, 0, 0), 2)
         Sphere(Vec3(5, 0, 10), Vec3(0, 0, 0), 2)
         Sphere(Vec3(5, 0, 15), Vec3(0, 0, 0), 2)
         Sphere(Vec3(5, 0, 20), Vec3(0, 0, 0), 2)
+
+        Sphere(Vec3(10, 0,  5), Vec3(0, 0, 0), 2)
+        Sphere(Vec3(10, 0, 10), Vec3(0, 0, 0), 2)
+        Sphere(Vec3(10, 0, 15), Vec3(0, 0, 0), 2)
+        Sphere(Vec3(10, 0, 20), Vec3(0, 0, 0), 2)
 
 
         self.running = False
@@ -87,7 +99,10 @@ class Game:
 
 
 
+            Engine.meshes.sort(key=Mesh.get_avg_z, reverse=True)
+
             Camera.main.calc_cs()
+            
             for mesh in Engine.meshes:
                 mesh.draw(image)
 

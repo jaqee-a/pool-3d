@@ -1,6 +1,6 @@
 import numpy as np
 
-from utils import *
+from utils import Vec3
 from math import cos, sin
 
 class Engine:
@@ -9,7 +9,7 @@ class Engine:
     triangles = np.array([])
 
     @staticmethod
-    def rotate(point, rotation):
+    def rotate(point: Vec3, rotation: Vec3):
         cx = cos(rotation.x)
         cy = cos(rotation.y)
         cz = cos(rotation.z)
@@ -19,7 +19,7 @@ class Engine:
 
         return Engine.rotate_cs(point, (cx, cy, cz), (sx, sy, sz))
 
-    def rotate_cs(point, cos, sin):
+    def rotate_cs(point: Vec3, cos: tuple, sin: tuple):
         cx, cy, cz = cos
         sx, sy, sz = sin
 

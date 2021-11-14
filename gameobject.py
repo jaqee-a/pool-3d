@@ -6,9 +6,9 @@ from utils import Vec3
 class GameObject:
 
 
-    def __init__(self) -> None:
-        self.position = Vec3(0, 0, 0)
-        self.rotation = Vec3(0, 0, 0)
+    def __init__(self, pos: Vec3 = Vec3(0, 0, 0), rot: Vec3 = Vec3(0, 0, 0)) -> None:
+        self.position = pos
+        self.rotation = rot
 
         self.cos = self.sin = (0, 0, 0)
 

@@ -1,6 +1,6 @@
 from engine import Engine
 from gameobject import GameObject
-from utils import *
+from utils import Vec2, Vec3
 
 from constants import FA, FB, WIDTH, HEIGHT
 

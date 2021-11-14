@@ -1,7 +1,6 @@
-import numpy as np
 from mesh import Mesh
-from utils import *
-from triangle import *
+from utils import Vec3
+from triangle import Triangle
 
 class Cube(Mesh):
 

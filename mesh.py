@@ -1,18 +1,23 @@
-from gameobject import *
-from triangle import *
+import pygame
+
+from engine import Engine
+from gameobject import GameObject
+from camera import Camera
+from triangle import Triangle
+from utils import Vec3
 
 class Mesh(GameObject):
 
-    def __init__(self, position, rotation) -> None:
-        super().__init__()
-
-        self.position = position
-        self.rotation = rotation
+    def __init__(self, pos: Vec3, rot: Vec3) -> None:
+        super(Mesh, self).__init__(pos, rot)
 
         self.triangles = []
 
         Engine.meshes += [self]
 
+
+    def get_avg_z(self):
+        return sum(map(Triangle.get_avg_z, self.triangles)) / len(self.triangles)
 
 
     def draw(self, screen):
@@ -27,6 +32,8 @@ class Mesh(GameObject):
             translated_1 = rotated_p1 + self.position
             translated_2 = rotated_p2 + self.position
             translated_3 = rotated_p3 + self.position
+
+            triangle.avg_z = (translated_1.z + translated_2.z + translated_3.z) / 3.0
 
             cen = Vec3.div(translated_1 + translated_2 + translated_3, 3)
 
@@ -45,9 +52,11 @@ class Mesh(GameObject):
                 uv1 = Camera.main.world_to_screen_point(translated_1).values()
                 uv2 = Camera.main.world_to_screen_point(translated_2).values()
                 uv3 = Camera.main.world_to_screen_point(translated_3).values()
-        
-                # pygame.draw.polygon(screen, [*map(abs,Vec3.mul(norm, 255).values()),], (uv1, uv2, uv3))
-                pygame.draw.line(screen, (0, 0, 0), uv1, uv2, 3)
-                pygame.draw.line(screen, (0, 0, 0), uv1, uv3, 3)
-                pygame.draw.line(screen, (0, 0, 0), uv3, uv2, 3)
+
+                norm_c = [*map(abs,Vec3.mul(norm, 255).values()),]
+
+                #pygame.draw.polygon(screen, norm_c, (uv1, uv2, uv3))
+                pygame.draw.line(screen, norm_c, uv1, uv2, 3)
+                pygame.draw.line(screen, norm_c, uv1, uv3, 3)
+                pygame.draw.line(screen, norm_c, uv3, uv2, 3)
             
