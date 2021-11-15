@@ -8,7 +8,7 @@ class Light(GameObject):
     def __init__(self) -> None:
         super().__init__()
 
-        self.direction = Vec3(.5, 1, -.5)
+        self.direction = [.5, 1, -.5]
 
 
 Light.g_light = Light()

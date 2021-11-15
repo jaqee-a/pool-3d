@@ -1,4 +1,4 @@
-from utils import *
+from utils import Utils
 from camera import *
 from light import *
 
@@ -7,7 +7,7 @@ import pygame
 
 class Triangle:
 
-    def __init__(self, p1: Vec3, p2: Vec3, p3: Vec3) -> None:
+    def __init__(self, p1: tuple, p2: tuple, p3: tuple) -> None:
         self.points = [p1, p2, p3]
         self.avg_z = 0
 
@@ -15,7 +15,7 @@ class Triangle:
         return self.avg_z
 
     def get_center(self):
-        return Vec3.div(self.points[0] + self.points[1] + self.points[2], 3)
+        return Utils.div_r(Utils.add_r(Utils.add_r(self.points[0], self.points[1]), self.points[2]), 3)
 
     # TODO Delete
     def draw(self, screen):

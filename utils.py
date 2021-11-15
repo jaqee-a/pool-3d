@@ -1,141 +1,131 @@
-class Vec3:
-
-    @staticmethod
-    def to_vec3(arr):
-        return Vec3(arr[0], arr[1], arr[2])
-
+class Utils:
     @staticmethod
     def div(vec, num):
-        return Vec3(vec.x / num, vec.y / num, vec.z / num)
+        vec[0] /= num
+        vec[1] /= num
+        vec[2] /= num
 
     @staticmethod
     def mul(vec, num):
-        return Vec3(vec.x * num, vec.y * num, vec.z * num)
-
-
-    def __init__(self, x, y, z) -> None:
-        self.x = x
-        self.y = y
-        self.z = z
-        
-    def set(self, x, y, z):
-        self.x, self.y, self.z = x, y, z
-
-    def normalize(self):
-        self.n_div(self.magnitude())
-
-    def normalized(self):
-        mag = self.magnitude()
-
-        if mag == 0: return Vec3(0, 0, 0)
-
-        return Vec3.div(self, mag)
-
-    def magnitude(self):
-        return self.sqrmagnitude()**.5
-
-    def sqrmagnitude(self):
-        return self.x ** 2 + self.y ** 2 + self.z ** 2
-
-    def n_div(self, num):
-        self.x /= num
-        self.y /= num
-        self.z /= num
-
-    def n_mul(self, num):
-        self.x *= num
-        self.y *= num
-        self.z *= num
-
-    def values(self):
-        return (self.x, self.y, self.z)
-
-    def dot(self, other):
-        return self.x * other.x + self.y * other.y + self.z * other.z
-
-    def cross(self, other):
-        return Vec3(self.y * other.z - other.y * self.z,
-                    other.x * self.z - self.x * other.z,
-                    self.x * other.y - other.x * self.y)
-
-    def __add__(self, other):
-        return Vec3(self.x + other.x, self.y + other.y, self.z + other.z)
-
-    def __sub__(self, other):
-        return Vec3(self.x - other.x, self.y - other.y, self.z - other.z)
-
-    def __mul__(self, other):
-        return Vec3(self.x * other.x, self.y * other.y, self.z * other.z)
-
-    def __div__(self, other):
-        return Vec3(self.x / other.x, self.y / other.y, self.z / other.z)
-
-    def __str__(self) -> str:
-        return f"({self.x}, {self.y}, {self.z})"
-
-class Vec2:
+        vec[0] *= num
+        vec[1] *= num
+        vec[2] *= num
 
     @staticmethod
-    def to_vec2(arr):
-        return Vec2(arr[0], arr[1])
+    def add(vec, num):
+        vec[0] += num
+        vec[1] += num
+        vec[2] += num
 
     @staticmethod
-    def div(vec, num):
-        return Vec2(vec.x / num, vec.y / num)
+    def sub(vec, num):
+        vec[0] -= num
+        vec[1] -= num
+        vec[2] -= num
 
     @staticmethod
-    def mul(vec, num):
-        return Vec2(vec.x * num, vec.y * num)
+    def mul_vec(vec, other):
+        vec[0] *= other[0]
+        vec[1] *= other[1]
+        vec[2] *= other[2]
 
+    @staticmethod
+    def div_vec(vec, other):
+        vec[0] /= other[0]
+        vec[1] /= other[1]
+        vec[2] /= other[2]
 
-    def __init__(self, x, y) -> None:
-        self.x = x
-        self.y = y
+    @staticmethod
+    def add_vec(vec, other):
+        vec[0] += other[0]
+        vec[1] += other[1]
+        vec[2] += other[2]
 
-    def set(self, x, y):
-        self.x, self.y = x, y
+    @staticmethod
+    def sub_vec(vec, other):
+        vec[0] -= other[0]
+        vec[1] -= other[1]
+        vec[2] -= other[2]
 
-    def normalize(self):
-        self.n_div(self.magnitude())
+    
+    @staticmethod
+    def div_r(vec, num):
+        return [vec[0] / num,
+                vec[1] / num,
+                vec[2] / num]
 
-    def normalized(self):
-        mag = self.magnitude()
+    @staticmethod
+    def mul_r(vec, num):
+        return [vec[0] * num,
+                vec[1] * num,
+                vec[2] * num]
 
-        if mag == 0: return Vec2(0, 0)
+    @staticmethod
+    def add_r(vec, num):
+        return [vec[0] + num,
+                vec[1] + num,
+                vec[2] + num]
 
-        return Vec2.div(self, mag)
+    @staticmethod
+    def sub_r(vec, num):
+        return [vec[0] - num,
+                vec[1] - num,
+                vec[2] - num]
 
-    def magnitude(self):
-        return self.sqrmagnitude()**.5
+    @staticmethod
+    def div_vec_r(vec, other):
+        return [vec[0] / other[0],
+                vec[1] / other[1],
+                vec[2] / other[2]]
 
-    def sqrmagnitude(self):
-        return self.x ** 2 + self.y ** 2
+    @staticmethod
+    def mul_vec_r(vec, other):
+        return [vec[0] * other[0],
+                vec[1] * other[1],
+                vec[2] * other[2]]
 
-    def n_div(self, num):
-        self.x /= num
-        self.y /= num
+    @staticmethod
+    def add_vec_r(vec, other):
+        return [vec[0] + other[0],
+                vec[1] + other[1],
+                vec[2] + other[2]]
 
-    def n_mul(self, num):
-        self.x *= num
-        self.y *= num
+    @staticmethod
+    def sub_vec_r(vec, other):
+        return [vec[0] - other[0],
+                vec[1] - other[1],
+                vec[2] - other[2]]
 
-    def values(self):
-        return (self.x, self.y)
+    @staticmethod
+    def normalize(vec):
+        mag = Utils.magnitude(vec)
 
-    def dot(self, other):
-        return self.x * other.x + self.y * other.y
+        if mag == 0: return (0, 0, 0)
 
-    def __add__(self, other):
-        return Vec2(self.x + other.x, self.y + other.y)
+        Utils.div(vec, mag)
 
-    def __sub__(self, other):
-        return Vec2(self.x - other.x, self.y - other.y)
+    @staticmethod
+    def normalized(vec):
+        mag = Utils.magnitude(vec)
 
-    def __mul__(self, other):
-        return Vec2(self.x * other.x, self.y * other.y)
+        if mag == 0: return (0, 0, 0)
 
-    def __div__(self, other):
-        return Vec2(self.x / other.x, self.y / other.y)
+        return Utils.div_r(vec, mag)
 
-    def __str__(self) -> str:
-        return f"({self.x}, {self.y})"
+    @staticmethod
+    def magnitude(vec):
+        return Utils.sqrmagnitude(vec)**.5
+
+    @staticmethod
+    def sqrmagnitude(vec):
+        return vec[0] ** 2 + vec[1] ** 2 + vec[2] ** 2
+
+    @staticmethod
+    def dot(vec, other):
+        return vec[0] * other[0] + vec[1] * other[1] + vec[2] * other[2]
+
+    @staticmethod
+    def cross(vec, other):
+        return [vec[1] * other[2] - other[1] * vec[2],
+                other[0] * vec[2] - vec[0] * other[2],
+                vec[0] * other[1] - other[0] * vec[1]]

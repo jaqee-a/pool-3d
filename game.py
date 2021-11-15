@@ -8,8 +8,8 @@ from mesh import Mesh
 from keyboard import Keyboard
 from objparser import ObjParser
 from shpere import Sphere
-from utils import Vec3
 from cube import Cube
+from utils import Utils
 
 class Game:
 
@@ -27,42 +27,42 @@ class Game:
         self.clock = pygame.time.Clock()
 
         """
-        Cube(Vec3(0, 0,  5), Vec3(0, 0, 0), 2)
-        Cube(Vec3(0, 0, 10), Vec3(0, 0, 0), 2)
-        Cube(Vec3(0, 0, 15), Vec3(0, 0, 0), 2)
-        Cube(Vec3(0, 0, 20), Vec3(0, 0, 0), 2)
+        Cube([0, 0,  5], [0, 0, 0], 2)
+        Cube([0, 0, 10], [0, 0, 0], 2)
+        Cube([0, 0, 15], [0, 0, 0], 2)
+        Cube([0, 0, 20], [0, 0, 0], 2)
 
-        Sphere(Vec3(5, 0,  5), Vec3(0, 0, 0), 2)
-        Sphere(Vec3(5, 0, 10), Vec3(0, 0, 0), 2)
-        Sphere(Vec3(5, 0, 15), Vec3(0, 0, 0), 2)
-        Sphere(Vec3(5, 0, 20), Vec3(0, 0, 0), 2)
+        Sphere([5, 0,  5], [0, 0, 0], 2)
+        Sphere([5, 0, 10], [0, 0, 0], 2)
+        Sphere([5, 0, 15], [0, 0, 0], 2)
+        Sphere([5, 0, 20], [0, 0, 0], 2)
         """
-        ObjParser.parse("assets/table.obj")
+        self.table = ObjParser.parse("assets/Btable.obj")
 
         self.running = False
 
     def handle_keys(self):
         for key_held in Keyboard.held_keys:
             if key_held == pygame.K_z:
-                Camera.main.position += Vec3.mul(Camera.main.forward(), self.delta_time * 5)
+                Utils.add_vec(Camera.main.position, Utils.mul_r(Camera.main.forward(), self.delta_time * 5))
             if key_held == pygame.K_s:
-                Camera.main.position += Vec3.mul(Camera.main.backward(), self.delta_time * 5)
+                Utils.add_vec(Camera.main.position, Utils.mul_r(Camera.main.backward(), self.delta_time * 5))
             if key_held == pygame.K_d:
-                Camera.main.position += Vec3.mul(Camera.main.right(), self.delta_time * 5)
+                Utils.add_vec(Camera.main.position, Utils.mul_r(Camera.main.right(), self.delta_time * 5))
             if key_held == pygame.K_q:
-                Camera.main.position += Vec3.mul(Camera.main.left(), self.delta_time * 5)
+                Utils.add_vec(Camera.main.position, Utils.mul_r(Camera.main.left(), self.delta_time * 5))
             if key_held == pygame.K_SPACE:
-                Camera.main.position += Vec3.mul(Vec3(0, 1, 0), self.delta_time * 5)
+                Utils.add_vec(Camera.main.position, Utils.mul_r((0, 1, 0), self.delta_time * 5))
             if key_held == pygame.K_LCTRL:
-                Camera.main.position += Vec3.mul(Vec3(0, -1, 0), self.delta_time * 5)
+                Utils.add_vec(Camera.main.position, Utils.mul_r((0, -1, 0), self.delta_time * 5))
             if key_held == pygame.K_LEFT:
-                Camera.main.rotation += Vec3.mul(Vec3(0, 1, 0), self.delta_time)
+                Utils.add_vec(Camera.main.rotation, Utils.mul_r((0, 1, 0), self.delta_time))
             if key_held == pygame.K_RIGHT:
-                Camera.main.rotation += Vec3.mul(Vec3(0, -1, 0), self.delta_time)
+                Utils.add_vec(Camera.main.rotation, Utils.mul_r((0, -1, 0), self.delta_time))
             if key_held == pygame.K_UP:
-                Camera.main.rotation += Vec3.mul(Vec3(1, 0, 0), self.delta_time)
+                Utils.add_vec(Camera.main.rotation, Utils.mul_r((1, 0, 0), self.delta_time))
             if key_held == pygame.K_DOWN:
-                Camera.main.rotation += Vec3.mul(Vec3(-1, 0, 0), self.delta_time)
+                Utils.add_vec(Camera.main.rotation, Utils.mul_r((-1, 0, 0), self.delta_time))
 
 
 

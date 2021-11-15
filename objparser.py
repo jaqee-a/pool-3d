@@ -1,6 +1,5 @@
 from mesh import Mesh
 from triangle import Triangle
-from utils import Vec3
 
 
 
@@ -24,14 +23,14 @@ class ObjParser:
                     
                     triangles.append(
                         Triangle(
-                            Vec3.to_vec3(verts[i1-1]),
-                            Vec3.to_vec3(verts[i2-1]),
-                            Vec3.to_vec3(verts[i3-1])
+                            verts[i1-1],
+                            verts[i2-1],
+                            verts[i3-1]
                         )
                     )
 
 
-        out = Mesh()
+        out = Mesh(pos=[0, 0, 15])
         out.triangles = triangles
 
         return out

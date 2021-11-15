@@ -1,12 +1,12 @@
 from math import cos, sin
 from engine import Engine
-from utils import Vec3
+from utils import Utils
 
 
 class GameObject:
 
 
-    def __init__(self, pos: Vec3 = Vec3(0, 0, 0), rot: Vec3 = Vec3(0, 0, 0)) -> None:
+    def __init__(self, pos: list = [0, 0, 0], rot: list = [0, 0, 0]) -> None:
         self.position = pos
         self.rotation = rot
 
@@ -14,27 +14,27 @@ class GameObject:
 
 
     def calc_cs(self):
-        self.cos = (cos(self.rotation.x), cos(self.rotation.y), cos(self.rotation.z))
-        self.sin = (sin(self.rotation.x), sin(self.rotation.y), sin(self.rotation.z))
+        self.cos = (cos(self.rotation[0]), cos(self.rotation[1]), cos(self.rotation[2]))
+        self.sin = (sin(self.rotation[0]), sin(self.rotation[1]), sin(self.rotation[2]))
 
 
     def forward(self):
-        return Engine.rotate(Vec3(0, 0, 1), Vec3.mul(self.rotation, -1))
+        return Engine.rotate((0, 0, 1), Utils.mul_r(self.rotation, -1))
 
 
     def backward(self):
-        return Vec3.mul(self.forward(), -1)
+        return Utils.mul_r(self.forward(), -1)
 
 
     def right(self):
-        return Engine.rotate(Vec3(1, 0, 0), Vec3.mul(self.rotation, -1))
+        return Engine.rotate((1, 0, 0), Utils.mul_r(self.rotation, -1))
 
     def left(self):
-        return Vec3.mul(self.right(), -1)
+        return Utils.mul_r(self.right(), -1)
 
 
     def up(self):
-        return Engine.rotate(Vec3(0, 1, 0), Vec3.mul(self.rotation, -1))
+        return Engine.rotate((0, 1, 0), Utils.mul_r(self.rotation, -1))
 
     def down(self):
-        return Vec3.mul(self.up(), -1)
+        return Utils.mul_r(self.up(), -1)
