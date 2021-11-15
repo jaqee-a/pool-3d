@@ -1,7 +1,3 @@
-
-
-
-
 from cube import Cube
 from utils import Vec3
 
@@ -12,5 +8,5 @@ class Sphere(Cube):
         super(Sphere, self).__init__(pos, rot, res)
 
         for triangle in self.triangles:
-            triangle.points = [*map(lambda x:x.normalized(), triangle.points),]
-        
+            for point in triangle.points:
+                point.normalize()

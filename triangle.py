@@ -9,16 +9,15 @@ class Triangle:
 
     def __init__(self, p1: Vec3, p2: Vec3, p3: Vec3) -> None:
         self.points = [p1, p2, p3]
-
+        self.avg_z = 0
 
     def get_avg_z(self):
-        points = [*map(lambda x:(Engine.rotate(x, Camera.main.rotation)-Camera.main.position), self.points),]
-        p1, p2, p3 = points
-        return (p1.z + p2.z + p3.z) / 3.0
+        return self.avg_z
 
     def get_center(self):
         return Vec3.div(self.points[0] + self.points[1] + self.points[2], 3)
 
+    # TODO Delete
     def draw(self, screen):
         points = [*map(lambda x:Camera.main.world_to_screen_point(x).values(), self.points),]
 
@@ -29,19 +28,3 @@ class Triangle:
             pygame.draw.line(screen, (0, 0, 0), points[1], points[2])
             pygame.draw.line(screen, (0, 0, 0), points[0], points[2])
             #pygame.draw.polygon(screen, color=[*map(abs,Vec3.mul(Engine.calc_normal(*self.points), 255 * min(1, .2 + _light_percent)).values()),], points=points)
-        
-        
-        
-        
-        
-        #print(points)
-
-        '''
-        pygame.draw.line(screen, (255, 255, 255), points[0], points[1], 5)
-        pygame.draw.line(screen, (255, 255, 255), points[1], points[2], 5)
-        pygame.draw.line(screen, (255, 255, 255), points[0], points[2], 5)
-        
-        pygame.draw.line(screen, (255, 255, 255), Camera.main.world_to_screen_point(self.points[0]).values(), Camera.main.world_to_screen_point(self.points[1]).values(), 5)
-        pygame.draw.line(screen, (255, 255, 255), Camera.main.world_to_screen_point(self.points[1]).values(), Camera.main.world_to_screen_point(self.points[2]).values(), 5)
-        pygame.draw.line(screen, (255, 255, 255), Camera.main.world_to_screen_point(self.points[0]).values(), Camera.main.world_to_screen_point(self.points[2]).values(), 5)
-        '''

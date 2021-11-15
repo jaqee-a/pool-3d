@@ -1,13 +1,15 @@
-import numpy as np
 import pygame
-from camera import Camera
 
 from constants import HEIGHT, WIDTH, FPS
+
+from engine import Engine
+from camera import Camera
+from mesh import Mesh
 from keyboard import Keyboard
 from objparser import ObjParser
 from shpere import Sphere
 from utils import Vec3
-from cube import *
+from cube import Cube
 
 class Game:
 
@@ -89,7 +91,10 @@ class Game:
 
 
 
+            Engine.meshes.sort(key=Mesh.get_avg_z, reverse=True)
+
             Camera.main.calc_cs()
+            
             for mesh in Engine.meshes:
                 mesh.draw(image)
 
