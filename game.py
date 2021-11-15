@@ -4,6 +4,7 @@ from camera import Camera
 
 from constants import HEIGHT, WIDTH, FPS
 from keyboard import Keyboard
+from objparser import ObjParser
 from shpere import Sphere
 from utils import Vec3
 from cube import *
@@ -23,7 +24,7 @@ class Game:
 
         self.clock = pygame.time.Clock()
 
-        
+        """
         Cube(Vec3(0, 0,  5), Vec3(0, 0, 0), 2)
         Cube(Vec3(0, 0, 10), Vec3(0, 0, 0), 2)
         Cube(Vec3(0, 0, 15), Vec3(0, 0, 0), 2)
@@ -33,7 +34,8 @@ class Game:
         Sphere(Vec3(5, 0, 10), Vec3(0, 0, 0), 2)
         Sphere(Vec3(5, 0, 15), Vec3(0, 0, 0), 2)
         Sphere(Vec3(5, 0, 20), Vec3(0, 0, 0), 2)
-
+        """
+        ObjParser.parse("assets/table.obj")
 
         self.running = False
 

@@ -3,7 +3,7 @@ from triangle import *
 
 class Mesh(GameObject):
 
-    def __init__(self, position, rotation) -> None:
+    def __init__(self, position = Vec3(0, 0, 0), rotation = Vec3(0, 0, 0)) -> None:
         super().__init__()
 
         self.position = position
